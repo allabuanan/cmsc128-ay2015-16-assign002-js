@@ -1,0 +1,121 @@
+def	getHammingDistance(string1, string2):
+	counter1 = 0 
+	counter2 = 0 
+	i = 0
+	inversions = 0
+	string1 = string1.lower()								#put string1 to lowercase so that both strings will be lowercase
+	string2 = string2.lower()								#put string2 to lowercase so that both strings will be lowercase
+
+	if (len(string1) != len(string2)):						#if string length isn't the same then inputs are not validd
+		print("Error! Strings are not equal!")
+		return 0
+	
+	for i in range (0, len(string1)):
+		if (string1[i] != string2[i]):						#for every character in the strings that are not equal, counter will increment
+			inversions = inversions + 1
+	print("The number of inversions is: %d" %inversions)
+
+
+def countSubstrPattern(string, pattern):
+	bool = True
+	count = 0
+	index = 0
+	while bool:
+	    a = string.find(pattern,index)						#check if pattern is located in string starting from the first index
+                                  
+	    if a == -1:											#when pattern cannot be found in string, while loop will stop
+	        bool=False
+	    else:												#adds + 1 to count if pattern is found in string and +1 to the index
+	        count = count + 1        
+	        index = a + 1
+	print("The number of occurence is: %d" %count)
+
+
+def isValidString(string, alphabet):
+	i = 0
+	x = 0
+	list = []
+	bool = True
+	list[:0] = alphabet										#put each character of the alphabet in the list
+	for i in range (0,len(string)):
+		if any(string[i] in s for s in list):				#bool is true when character is in alphabet
+			bool = True
+		else:	
+			bool = False									#bool is false if character is not in alphabet
+			break
+	print(bool)
+
+
+def getSkew(string, num):
+	gCount = 0
+	cCount = 0
+	result = 0
+	i = 0
+	if(len(string)<num):									#if num is greater than the length of string, then it is invalid
+		print("Index is invalid!")
+
+	for i in range(0,num):									
+		if(string[i] == "G"):								#when g is found in string, gCount increments
+			gCount = gCount + 1
+		elif(string[i] == "C"):
+			cCount = cCount + 1								#when g is found in string, cCount increments
+
+	result = gCount - cCount
+	print("Skew is %d" %result)
+
+def getMaxSkewN(string, num):
+	gCount = 0
+	cCount = 0
+	final = 0												#contains the final result
+	result = 0
+	i = 0			
+	if(len(string)<num):									#if num is greater than the length of string, then it is invalid
+		print("Index is invalid!")
+
+	for i in range(0,num):
+		if(string[i] == "G"):								#when g is found in string, gCount increments
+			gCount = gCount + 1
+			result = gCount - cCount
+			if(final>result):								#if final is bigger than current skew, continue
+				continue
+			elif(final<result):
+				final = result								#else if current skew is bigger than final, final will get the value of result
+		elif(string[i] == "C"):
+			cCount = cCount + 1
+			result = gCount - cCount
+			if(final>result):
+				continue
+			elif(final<result):
+				final = result
+
+	print("Max skew is %d" %final)
+
+def getMinSkewN(string, num):
+	gCount = 0
+	cCount = 0
+	final = 0												#contains the final result
+	result = 0
+	i = 0
+	if(len(string)<num):									#if num is greater than the length of string, then it is invalid
+		print("Index is invalid!")
+
+	for i in range(0,num):
+		if(string[i] == "G"):
+			gCount = gCount + 1								#when g is found in string, gCount increments
+			result = gCount - cCount
+			if(final<result):								#if final is less than current skew, continue
+				continue
+			else:											#else if current skew is less than final, final will get the value of result
+				final = result					
+		elif(string[i] == "C"):
+			cCount = cCount + 1
+			result = gCount - cCount
+			if(final<result):
+				continue
+			else:
+				final = result
+
+	print("Min skew is %d" %final)
+
+getMaxSkewN("GGCCAC", 5)
+getMinSkewN("GGCCAC", 5)
